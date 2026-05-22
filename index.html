@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتب الهندسي للحلول البرمجية والبيانات</title>
+    <title>مكتب الأخوين للخدمات التقنية</title>
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -21,17 +21,17 @@
             padding: 0;
         }
 
-        /* الهيدر والواجهة الرئيسية */
         header {
             background: linear-gradient(135deg, var(--primary-color), #0f172a);
             color: var(--white);
             text-align: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            letter-spacing: 1px;
         }
 
         header p {
@@ -43,42 +43,15 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
-        /* قسم الخدمات */
-        .services-section {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid var(--secondary-color);
-        }
-
-        .service-card h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-        }
-
-        /* قسم النموذج الحي للبحث */
         .demo-section {
             background: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 50px;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-top: -40px;
         }
 
         .demo-section h2 {
@@ -95,50 +68,52 @@
 
         .search-box input {
             flex: 1;
-            padding: 12px 20px;
+            padding: 15px 20px;
             border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
             outline: none;
             transition: 0.3s;
         }
 
         .search-box input:focus {
-            border-color: var(--primary-color);
+            border-color: var(--secondary-color);
         }
 
         .search-box button {
-            background-color: var(--primary-color);
+            background-color: var(--secondary-color);
             color: var(--white);
             border: none;
-            padding: 0 25px;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 0 35px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .search-box button:hover {
-            background-color: #1d4ed8;
+            background-color: #ea580c;
         }
 
-        /* جدول استدعاء البيانات */
         .result-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            display: none; /* مخفي حتى يتم البحث */
+            margin-top: 20px;
+            display: none;
+            overflow: hidden;
+            border-radius: 10px;
         }
 
         .result-table th, .result-table td {
             border: 1px solid #e2e8f0;
-            padding: 12px;
-            text-align: right;
+            padding: 15px;
+            text-align: center;
         }
 
         .result-table th {
-            background-color: #f1f5f9;
-            color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: var(--white);
         }
 
         .no-result {
@@ -146,15 +121,15 @@
             text-align: center;
             display: none;
             font-weight: bold;
+            padding: 20px;
         }
 
-        /* الفوتر للتواصل */
         footer {
             background-color: #0f172a;
             color: var(--white);
             text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
+            padding: 40px 20px;
+            margin-top: 50px;
         }
 
         footer a {
@@ -166,119 +141,86 @@
 </head>
 <body>
 
-    <!-- الواجهة الرئيسية -->
     <header>
-        <h1>تطوير الحلول البرمجية الذكية</h1>
-        <p>نُصمم واجهات ويب خفيفة وسريعة لربط وأتمتة بياناتك وبلمحة بصر</p>
+        <h1>مكتب الأخوين</h1>
+        <p>للخدمات التقنية وصيانة الأجهزة الذكية</p>
     </header>
 
     <div class="container">
-        
-        <!-- قسم الخدمات والتعريف -->
-        <section class="services-section">
-            <h2>خدماتنا البرمجية</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>ربط وتطوير قواعد البيانات</h3>
-                    <p>تحويل جداول البيانات الضخمة (Google Sheets / Excel) إلى واجهات بحث تفاعلية مخصصة وسهلة الاستخدام.</p>
-                </div>
-                <div class="service-card">
-                    <h3>أرشفة وتتبع الوصولات</h3>
-                    <p>بناء أنظمة فحص سريعة ومحمية للزبائن لمراجعة حالات طلباتهم ووصولاتهم عبر رقم الهاتف أو رقم الإدخال.</p>
-                </div>
-                <div class="service-card">
-                    <h3>تطوير واجهات ويب مخصصة</h3>
-                    <p>تصميم واجهات (HTML/CSS) متوافقة بالكامل مع الموبايل والحاسبة بأعلى سرعة وكود برمي نظيف.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- قسم تجربة حية للبحث (Live Demo) -->
         <section class="demo-section">
-            <h2>جرب الواجهة الذكية بنفسك (نسخة تجريبية)</h2>
-            <p style="text-align: center; color: #64748b;">أدخل رقم الهاتف أو رقم الوصل (مثال للتجربة: <b>101</b> أو <b>102</b>) لرؤية البيانات الحية فوراُ:</p>
+            <h2>نظام تتبع حالة الصيانة</h2>
+            <p style="text-align: center; color: #64748b;">أدخل رقم الوصل الخاص بك لمعرفة حالة الجهاز الحالية:</p>
             
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل أو رقم الهاتف للبحث...">
+                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل (مثال: 101)...">
                 <button onclick="searchData()">بحث</button>
             </div>
 
-            <!-- جدول عرض النتائج المستدعاة -->
             <table class="result-table" id="resultTable">
                 <thead>
                     <tr>
                         <th>رقم الوصل</th>
                         <th>اسم الزبون</th>
-                        <th>نوع الخدمة المطلوب</th>
-                        <th>الحالة الحالية</th>
+                        <th>نوع الخدمة</th>
+                        <th>حالة الجهاز</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                    <!-- البيانات تنزل هنا عبر الجافاسكربت -->
-                </tbody>
+                <tbody id="tableBody"></tbody>
             </table>
             
-            <p class="no-result" id="noResult">عذراً، لم يتم العثور على أي بيانات مطابقة!</p>
+            <p class="no-result" id="noResult">عذراً، لم يتم العثور على أي بيانات مطابقة لهذا الرقم!</p>
         </section>
-
     </div>
 
-    <!-- الفوتر والتواصل -->
     <footer>
-        <p>هل لديك مشروع مخصص أو ترغب بربط جداولك الخاصة؟</p>
-        <p>تواصل معي الآن عبر منصة كفيل: <a href="#" target="_blank">رابط حسابي في كفيل</a></p>
+        <p>© 2026 مكتب الأخوين - جميع الحقوق محفوظة</p>
+        <p>للتواصل معنا عبر منصة كفيل: <a href="https://kafiil.com" target="_blank">رابط الحساب الشخصي</a></p>
     </footer>
 
-    <!-- جافاسكربت لمحاكاة سحب البيانات بالكامل وبسرعة -->
-   <script>
-async function searchData() {
-    const query = document.getElementById("searchInput").value.trim();
-    const table = document.getElementById("resultTable");
-    const tbody = document.getElementById("tableBody");
-    const noResult = document.getElementById("noResult");
+    <script>
+    async function searchData() {
+        const query = document.getElementById("searchInput").value.trim();
+        const table = document.getElementById("resultTable");
+        const tbody = document.getElementById("tableBody");
+        const noResult = document.getElementById("noResult");
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbz1SMynIdC2Xefs8j20ZO_Ua05wyOYIcG8cblV6b39SfKTXtbSPkV0pZNsIRf7uD8xWOQ/exec";
 
-    // رابط السكربت الخاص بجدولك
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbz1SMynIdC2Xefs8j20ZO_Ua05wyOYIcG8cblV6b39SfKTXtbSPkV0pZNsIRf7uD8xWOQ/exec";
+        if (!query) {
+            alert("يرجى إدخال رقم الوصل أولاً");
+            return;
+        }
 
-    if (!query) {
-        alert("يرجى إدخال رقم الوصل أولاً");
-        return;
-    }
-
-    try {
-        // إظهار رسالة جاري البحث (اختياري)
-        tbody.innerHTML = "<tr><td colspan='4'>جاري جلب البيانات...</td></tr>";
-        table.style.display = "table";
-
-        const response = await fetch(webAppUrl);
-        const fullData = await response.json();
-        
-        // البحث عن رقم الوصل في العمود ID
-        const results = fullData.filter(row => row.id === query);
-
-        tbody.innerHTML = "";
-        if(results.length > 0) {
-            results.forEach(row => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${row.id}</td>
-                    <td>${row.name}</td>
-                    <td>نظام بيانات حقيقي</td>
-                    <td style="color: blue; font-weight: bold;">${row.status}</td>
-                `;
-                tbody.appendChild(tr);
-            });
+        try {
+            tbody.innerHTML = "<tr><td colspan='4'>جاري جلب البيانات من سجلات المكتب...</td></tr>";
             table.style.display = "table";
             noResult.style.display = "none";
-        } else {
-            table.style.display = "none";
-            noResult.style.display = "block";
+
+            const response = await fetch(webAppUrl);
+            const fullData = await response.json();
+            const results = fullData.filter(row => row.id === query);
+
+            tbody.innerHTML = "";
+            if(results.length > 0) {
+                results.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><b>${row.id}</b></td>
+                        <td>${row.name}</td>
+                        <td>صيانة تقنية</td>
+                        <td style="color: #1e3a8a; font-weight: bold; background-color: #e0f2fe;">${row.status}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                table.style.display = "table";
+            } else {
+                table.style.display = "none";
+                noResult.style.display = "block";
+            }
+        } catch (e) {
+            console.error("خطأ في الربط:", e);
+            alert("حدث خطأ أثناء الاتصال بالنظام، يرجى المحاولة لاحقاً");
         }
-    } catch (e) {
-        console.error("خطأ في الربط:", e);
-        alert("حدث خطأ أثناء الاتصال بجدول البيانات");
     }
-}
-</script>
+    </script>
 </body>
 </html>
