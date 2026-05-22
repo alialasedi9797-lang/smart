@@ -5,177 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مكتب الأخوين للخدمات التقنية</title>
     <style>
-        :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #f97316;
-            --background-color: #f8fafc;
-            --text-color: #334155;
-            --white: #ffffff;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0; padding: 0;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-color), #0f172a);
-            color: var(--white);
-            text-align: center;
-            padding: 50px 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
-        .demo-section {
-            background: var(--white);
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            margin-top: -40px;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin: 25px 0;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #cbd5e1;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            outline: none;
-        }
-
-        .search-box button {
-            background-color: var(--secondary-color);
-            color: var(--white);
-            border: none;
-            padding: 0 35px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .result-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            display: none;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .result-table th, .result-table td {
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .result-table th {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        .status-tag {
-            color: #1e3a8a;
-            font-weight: bold;
-            background-color: #e0f2fe;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        footer {
-            background-color: #0f172a;
-            color: var(--white);
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 50px;
-        }
+        :root { --primary-color: #1e3a8a; --secondary-color: #f97316; --background-color: #f8fafc; --white: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--background-color); margin: 0; text-align: center; }
+        header { background: linear-gradient(135deg, var(--primary-color), #0f172a); color: var(--white); padding: 40px; }
+        .container { max-width: 800px; margin: -30px auto 40px; padding: 20px; }
+        .box { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .search-box { display: flex; gap: 10px; margin-top: 20px; }
+        input { flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; }
+        button { background: var(--secondary-color); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; display: none; }
+        th, td { border: 1px solid #eee; padding: 12px; }
+        th { background: var(--primary-color); color: white; }
+        .status-tag { color: #1e3a8a; font-weight: bold; background: #e0f2fe; padding: 5px 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
-
     <header>
         <h1>مكتب الأخوين</h1>
-        <p>للخدمات التقنية وصيانة الأجهزة الذكية</p>
+        <p>نظام الاستعلام عن حالة الصيانة</p>
     </header>
-
     <div class="container">
-        <section class="demo-section">
-            <h2 style="text-align: center; color: var(--primary-color);">نظام تتبع حالة الصيانة</h2>
+        <div class="box">
+            <h3>أدخل رقم الوصل للبحث</h3>
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل للبحث...">
+                <input type="text" id="searchInput" placeholder="مثال: 101">
                 <button onclick="searchData()">بحث</button>
             </div>
-
-            <table class="result-table" id="resultTable">
+            <table id="resultTable">
                 <thead>
-                    <tr>
-                        <th>رقم الوصل</th>
-                        <th>اسم الزبون</th>
-                        <th>التكلفة (دينار)</th>
-                        <th>حالة الجهاز</th>
-                    </tr>
+                    <tr><th>رقم الوصل</th><th>الاسم</th><th>التكلفة</th><th>الحالة</th></tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
-            <p id="noResult" style="color: red; text-align: center; display: none; font-weight: bold;">لم يتم العثور على بيانات!</p>
-        </section>
+            <p id="noResult" style="color:red; display:none; margin-top:20px;">لم يتم العثور على بيانات!</p>
+        </div>
     </div>
-
-    <footer><p>© 2026 مكتب الأخوين - جميع الحقوق محفوظة</p></footer>
-
     <script>
-    async function searchData() {
-        const query = document.getElementById("searchInput").value.trim();
-        const table = document.getElementById("resultTable");
-        const tbody = document.getElementById("tableBody");
-        const noResult = document.getElementById("noResult");
+        async function searchData() {
+            const query = document.getElementById("searchInput").value.trim();
+            const webAppUrl = https://script.google.com/macros/s/AKfycbylQ7auCFd_UZ5CqKb5-2VibevFbuoHBuyhjy6jgGsSC9qXCbc4fzc9zMvTnabTEiFYew/exec"انسخ_الرابط_اللي_طلعلك_من_جوجل_هنا"; // <--- خلي الرابط هنا
 
-        // استبدل الرابط أدناه بالرابط الجديد من الـ Apps Script
-        const webAppUrl = "ضع_الرابط_الجديد_هنا";
+            if (!query) return alert("اكتب رقم الوصل");
+            document.getElementById("tableBody").innerHTML = "<tr><td colspan='4'>جاري البحث...</td></tr>";
+            document.getElementById("resultTable").style.display = "table";
 
-        if (!query) { alert("يرجى إدخال رقم الوصل"); return; }
-
-        try {
-            tbody.innerHTML = "<tr><td colspan='4'>جاري البحث...</td></tr>";
-            table.style.display = "table";
-            noResult.style.display = "none";
-
-            const response = await fetch(webAppUrl);
-            const fullData = await response.json();
-            const results = fullData.filter(row => row.id === query);
-
-            tbody.innerHTML = "";
-            if(results.length > 0) {
-                results.forEach(row => {
-                    const price = (row.price && row.price !== "") ? row.price : "غير محدد";
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td><b>${row.id}</b></td>
-                        <td>${row.name}</td>
-                        <td style="color: green; font-weight: bold;">${price}</td>
-                        <td><span class="status-tag">${row.status}</span></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } else {
-                table.style.display = "none";
-                noResult.style.display = "block";
-            }
-        } catch (e) { console.error(e); alert("خطأ في الاتصال بالبيانات"); }
-    }
+            try {
+                const res = await fetch(webAppUrl);
+                const data = await res.json();
+                const result = data.filter(r => r.id === query);
+                const tbody = document.getElementById("tableBody");
+                tbody.innerHTML = "";
+                if(result.length > 0) {
+                    result.forEach(r => {
+                        tbody.innerHTML += `<tr><td>${r.id}</td><td>${r.name}</td><td style="color:green; font-weight:bold;">${r.price} دينار</td><td><span class="status-tag">${r.status}</span></td></tr>`;
+                    });
+                } else {
+                    document.getElementById("resultTable").style.display = "none";
+                    document.getElementById("noResult").style.display = "block";
+                }
+            } catch(e) { alert("خطأ في الربط"); }
+        }
     </script>
 </body>
 </html>
