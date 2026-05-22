@@ -230,46 +230,55 @@
     </footer>
 
     <!-- جافاسكربت لمحاكاة سحب البيانات بالكامل وبسرعة -->
-    <script>
-        // بيانات وهمية مخزنة برمجياً لمحاكاة قاعدة البيانات الحية
-        const mockDatabase = [
-            { id: "101", name: "أحمد علي", service: "تصميم واجهة أرشفة مبيعات", status: "جاهز للتسليم" },
-            { id: "102", name: "محمد جاسم", service: "ربط جدول Google Sheets بواجهة HTML", status: "قيد التنفيذ" },
-            { id: "07700000000", name: "حسين كريم", service: "تطوير سكربت أتمتة حسابات", status: "تم التسليم" }
-        ];
+   <script>
+async function searchData() {
+    const query = document.getElementById("searchInput").value.trim();
+    const table = document.getElementById("resultTable");
+    const tbody = document.getElementById("tableBody");
+    const noResult = document.getElementById("noResult");
 
-        function searchData() {
-            const query = document.getElementById("searchInput").value.trim();
-            const table = document.getElementById("resultTable");
-            const tbody = document.getElementById("tableBody");
-            const noResult = document.getElementById("noResult");
-            
-            // تصفير الجدول السابق
-            tbody.innerHTML = "";
-            table.style.display = "none";
+    // رابط السكربت الخاص بجدولك
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbz1SMynIdC2Xefs8j20ZO_Ua05wyOYIcG8cblV6b39SfKTXtbSPkV0pZNsIRf7uD8xWOQ/exec";
+
+    if (!query) {
+        alert("يرجى إدخال رقم الوصل أولاً");
+        return;
+    }
+
+    try {
+        // إظهار رسالة جاري البحث (اختياري)
+        tbody.innerHTML = "<tr><td colspan='4'>جاري جلب البيانات...</td></tr>";
+        table.style.display = "table";
+
+        const response = await fetch(webAppUrl);
+        const fullData = await response.json();
+        
+        // البحث عن رقم الوصل في العمود ID
+        const results = fullData.filter(row => row.id === query);
+
+        tbody.innerHTML = "";
+        if(results.length > 0) {
+            results.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.id}</td>
+                    <td>${row.name}</td>
+                    <td>نظام بيانات حقيقي</td>
+                    <td style="color: blue; font-weight: bold;">${row.status}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            table.style.display = "table";
             noResult.style.display = "none";
-
-            if(query === "") return;
-
-            // البحث داخل قاعدة البيانات المصغرة
-            const results = mockDatabase.filter(row => row.id === query || row.name.includes(query));
-
-            if(results.length > 0) {
-                results.forEach(row => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td><b>${row.id}</b></td>
-                        <td>${row.name}</td>
-                        <td>${row.service}</td>
-                        <td style="color: ${row.status === 'جاهز للتسليم' || row.status === 'تم التسليم' ? '#16a34a' : '#d97706'}"><b>${row.status}</b></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-                table.style.display = "table";
-            } else {
-                noResult.style.display = "block";
-            }
+        } else {
+            table.style.display = "none";
+            noResult.style.display = "block";
         }
-    </script>
+    } catch (e) {
+        console.error("خطأ في الربط:", e);
+        alert("حدث خطأ أثناء الاتصال بجدول البيانات");
+    }
+}
+</script>
 </body>
 </html>
