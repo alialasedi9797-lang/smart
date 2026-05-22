@@ -31,7 +31,6 @@
         header h1 {
             margin: 0;
             font-size: 2.8rem;
-            letter-spacing: 1px;
         }
 
         header p {
@@ -54,12 +53,6 @@
             margin-top: -40px;
         }
 
-        .demo-section h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-top: 0;
-        }
-
         .search-box {
             display: flex;
             gap: 10px;
@@ -73,11 +66,6 @@
             border-radius: 10px;
             font-size: 1.1rem;
             outline: none;
-            transition: 0.3s;
-        }
-
-        .search-box input:focus {
-            border-color: var(--secondary-color);
         }
 
         .search-box button {
@@ -89,11 +77,6 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .search-box button:hover {
-            background-color: #ea580c;
         }
 
         .result-table {
@@ -101,8 +84,8 @@
             border-collapse: collapse;
             margin-top: 20px;
             display: none;
-            overflow: hidden;
             border-radius: 10px;
+            overflow: hidden;
         }
 
         .result-table th, .result-table td {
@@ -116,12 +99,18 @@
             color: var(--white);
         }
 
-        .no-result {
-            color: #ef4444;
-            text-align: center;
-            display: none;
+        .price-tag {
+            color: #059669;
             font-weight: bold;
-            padding: 20px;
+            font-size: 1.1rem;
+        }
+
+        .status-tag {
+            color: #1e3a8a;
+            font-weight: bold;
+            background-color: #e0f2fe;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
         footer {
@@ -130,12 +119,6 @@
             text-align: center;
             padding: 40px 20px;
             margin-top: 50px;
-        }
-
-        footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -148,11 +131,9 @@
 
     <div class="container">
         <section class="demo-section">
-            <h2>نظام تتبع حالة الصيانة</h2>
-            <p style="text-align: center; color: #64748b;">أدخل رقم الوصل الخاص بك لمعرفة حالة الجهاز الحالية:</p>
-            
+            <h2 style="text-align: center; color: var(--primary-color);">نظام تتبع حالة الصيانة</h2>
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل (مثال: 101)...">
+                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل...">
                 <button onclick="searchData()">بحث</button>
             </div>
 
@@ -161,20 +142,19 @@
                     <tr>
                         <th>رقم الوصل</th>
                         <th>اسم الزبون</th>
-                        <th>نوع الخدمة</th>
+                        <th>التكلفة الكلية</th>
                         <th>حالة الجهاز</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
             
-            <p class="no-result" id="noResult">عذراً، لم يتم العثور على أي بيانات مطابقة لهذا الرقم!</p>
+            <p id="noResult" style="color: red; text-align: center; display: none; font-weight: bold;">لم يتم العثور على بيانات!</p>
         </section>
     </div>
 
     <footer>
         <p>© 2026 مكتب الأخوين - جميع الحقوق محفوظة</p>
-        <p>للتواصل معنا عبر منصة كفيل: <a href="https://kafiil.com" target="_blank">رابط الحساب الشخصي</a></p>
     </footer>
 
     <script>
@@ -185,15 +165,11 @@
         const noResult = document.getElementById("noResult");
         const webAppUrl = "https://script.google.com/macros/s/AKfycbz1SMynIdC2Xefs8j20ZO_Ua05wyOYIcG8cblV6b39SfKTXtbSPkV0pZNsIRf7uD8xWOQ/exec";
 
-        if (!query) {
-            alert("يرجى إدخال رقم الوصل أولاً");
-            return;
-        }
+        if (!query) return;
 
         try {
-            tbody.innerHTML = "<tr><td colspan='4'>جاري جلب البيانات من سجلات المكتب...</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='4'>جاري جلب البيانات...</td></tr>";
             table.style.display = "table";
-            noResult.style.display = "none";
 
             const response = await fetch(webAppUrl);
             const fullData = await response.json();
@@ -204,10 +180,10 @@
                 results.forEach(row => {
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td><b>${row.id}</b></td>
+                        <td>${row.id}</td>
                         <td>${row.name}</td>
-                        <td>صيانة تقنية</td>
-                        <td style="color: #1e3a8a; font-weight: bold; background-color: #e0f2fe;">${row.status}</td>
+                        <td class="price-tag">${row.price} دينار</td>
+                        <td><span class="status-tag">${row.status}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -216,10 +192,7 @@
                 table.style.display = "none";
                 noResult.style.display = "block";
             }
-        } catch (e) {
-            console.error("خطأ في الربط:", e);
-            alert("حدث خطأ أثناء الاتصال بالنظام، يرجى المحاولة لاحقاً");
-        }
+        } catch (e) { console.error(e); }
     }
     </script>
 </body>
