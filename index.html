@@ -17,8 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
         }
 
         header {
@@ -26,17 +25,6 @@
             color: var(--white);
             text-align: center;
             padding: 50px 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.8rem;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-top: 10px;
         }
 
         .container {
@@ -99,12 +87,6 @@
             color: var(--white);
         }
 
-        .price-tag {
-            color: #059669;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
         .status-tag {
             color: #1e3a8a;
             font-weight: bold;
@@ -133,7 +115,7 @@
         <section class="demo-section">
             <h2 style="text-align: center; color: var(--primary-color);">نظام تتبع حالة الصيانة</h2>
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل...">
+                <input type="text" id="searchInput" placeholder="أدخل رقم الوصل للبحث...">
                 <button onclick="searchData()">بحث</button>
             </div>
 
@@ -142,20 +124,17 @@
                     <tr>
                         <th>رقم الوصل</th>
                         <th>اسم الزبون</th>
-                        <th>التكلفة الكلية</th>
+                        <th>التكلفة (دينار)</th>
                         <th>حالة الجهاز</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
-            
             <p id="noResult" style="color: red; text-align: center; display: none; font-weight: bold;">لم يتم العثور على بيانات!</p>
         </section>
     </div>
 
-    <footer>
-        <p>© 2026 مكتب الأخوين - جميع الحقوق محفوظة</p>
-    </footer>
+    <footer><p>© 2026 مكتب الأخوين - جميع الحقوق محفوظة</p></footer>
 
     <script>
     async function searchData() {
@@ -163,13 +142,16 @@
         const table = document.getElementById("resultTable");
         const tbody = document.getElementById("tableBody");
         const noResult = document.getElementById("noResult");
-        const webAppUrl = "https://script.google.com/macros/s/AKfycbz1SMynIdC2Xefs8j20ZO_Ua05wyOYIcG8cblV6b39SfKTXtbSPkV0pZNsIRf7uD8xWOQ/exec";
 
-        if (!query) return;
+        // استبدل الرابط أدناه بالرابط الجديد من الـ Apps Script
+        const webAppUrl = "ضع_الرابط_الجديد_هنا";
+
+        if (!query) { alert("يرجى إدخال رقم الوصل"); return; }
 
         try {
-            tbody.innerHTML = "<tr><td colspan='4'>جاري جلب البيانات...</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='4'>جاري البحث...</td></tr>";
             table.style.display = "table";
+            noResult.style.display = "none";
 
             const response = await fetch(webAppUrl);
             const fullData = await response.json();
@@ -178,21 +160,21 @@
             tbody.innerHTML = "";
             if(results.length > 0) {
                 results.forEach(row => {
+                    const price = (row.price && row.price !== "") ? row.price : "غير محدد";
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td>${row.id}</td>
+                        <td><b>${row.id}</b></td>
                         <td>${row.name}</td>
-                        <td class="price-tag">${row.price} دينار</td>
+                        <td style="color: green; font-weight: bold;">${price}</td>
                         <td><span class="status-tag">${row.status}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
-                table.style.display = "table";
             } else {
                 table.style.display = "none";
                 noResult.style.display = "block";
             }
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error(e); alert("خطأ في الاتصال بالبيانات"); }
     }
     </script>
 </body>
