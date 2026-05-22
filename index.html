@@ -3,68 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتب الأخوين للخدمات التقنية</title>
+    <title>مكتب الأخوين</title>
     <style>
-        :root { --primary-color: #1e3a8a; --secondary-color: #f97316; --background-color: #f8fafc; --white: #ffffff; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--background-color); margin: 0; text-align: center; }
-        header { background: linear-gradient(135deg, var(--primary-color), #0f172a); color: var(--white); padding: 40px; }
-        .container { max-width: 800px; margin: -30px auto 40px; padding: 20px; }
-        .box { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .search-box { display: flex; gap: 10px; margin-top: 20px; }
-        input { flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; }
-        button { background: var(--secondary-color); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; display: none; }
-        th, td { border: 1px solid #eee; padding: 12px; }
-        th { background: var(--primary-color); color: white; }
-        .status-tag { color: #1e3a8a; font-weight: bold; background: #e0f2fe; padding: 5px 10px; border-radius: 5px; }
+        :root { --primary: #1e3a8a; --accent: #f97316; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f1f5f9; margin: 0; text-align: center; color: #333; }
+        header { background: #0f172a; color: white; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .box { background: white; max-width: 500px; margin: 30px auto; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        input { width: 70%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; }
+        input:focus { border-color: var(--primary); }
+        button { padding: 12px 25px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ea580c; }
+        table { width: 100%; margin-top: 25px; border-collapse: collapse; display: none; background: white; }
+        th, td { border: 1px solid #eee; padding: 15px; text-align: center; }
+        th { background: var(--primary); color: white; }
+        .status { font-weight: bold; color: #1e3a8a; background: #e0f2fe; padding: 5px 10px; border-radius: 5px; }
+        .price { color: #16a34a; font-weight: bold; font-size: 1.1rem; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>مكتب الأخوين</h1>
-        <p>نظام الاستعلام عن حالة الصيانة</p>
-    </header>
-    <div class="container">
-        <div class="box">
-            <h3>أدخل رقم الوصل للبحث</h3>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="مثال: 101">
-                <button onclick="searchData()">بحث</button>
-            </div>
-            <table id="resultTable">
-                <thead>
-                    <tr><th>رقم الوصل</th><th>الاسم</th><th>التكلفة</th><th>الحالة</th></tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-            <p id="noResult" style="color:red; display:none; margin-top:20px;">لم يتم العثور على بيانات!</p>
-        </div>
-    </div>
-    <script>
-        async function searchData() {
-            const query = document.getElementById("searchInput").value.trim();
-            const webAppUrl = https://script.google.com/macros/s/AKfycbylQ7auCFd_UZ5CqKb5-2VibevFbuoHBuyhjy6jgGsSC9qXCbc4fzc9zMvTnabTEiFYew/exec"انسخ_الرابط_اللي_طلعلك_من_جوجل_هنا"; // <--- خلي الرابط هنا
 
-            if (!query) return alert("اكتب رقم الوصل");
-            document.getElementById("tableBody").innerHTML = "<tr><td colspan='4'>جاري البحث...</td></tr>";
-            document.getElementById("resultTable").style.display = "table";
+<header>
+    <h1>مكتب الأخوين</h1>
+    <p>نظام متابعة صيانة الأجهزة</p>
+</header>
 
-            try {
-                const res = await fetch(webAppUrl);
-                const data = await res.json();
-                const result = data.filter(r => r.id === query);
-                const tbody = document.getElementById("tableBody");
-                tbody.innerHTML = "";
-                if(result.length > 0) {
-                    result.forEach(r => {
-                        tbody.innerHTML += `<tr><td>${r.id}</td><td>${r.name}</td><td style="color:green; font-weight:bold;">${r.price} دينار</td><td><span class="status-tag">${r.status}</span></td></tr>`;
-                    });
-                } else {
-                    document.getElementById("resultTable").style.display = "none";
-                    document.getElementById("noResult").style.display = "block";
-                }
-            } catch(e) { alert("خطأ في الربط"); }
+<div class="box">
+    <h3>استعلم عن جهازك</h3>
+    <input type="text" id="ticketId" placeholder="أدخل رقم الوصل هنا...">
+    <button onclick="checkStatus()">بحث</button>
+
+    <table id="resTable">
+        <thead>
+            <tr>
+                <th>الاسم</th>
+                <th>الكلفة</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody id="resBody"></tbody>
+    </table>
+    <p id="empty" style="display:none; color:red; margin-top:20px; font-weight:bold;">رقم الوصل غير موجود، تأكد من الرقم!</p>
+</div>
+
+<script>
+async function checkStatus() {
+    const input = document.getElementById("ticketId").value.trim();
+    const table = document.getElementById("resTable");
+    const tbody = document.getElementById("resBody");
+    const empty = document.getElementById("empty");
+    
+    // رابط السكربت الجديد مالتك
+    const api = "https://script.google.com/macros/s/AKfycbylQ7auCFd_UZ5CqKb5-2VibevFbuoHBuyhjy6jgGsSC9qXCbc4fzc9zMvTnabTEiFYew/exec";
+
+    if(!input) return alert("اكتب رقم الوصل يا طيب");
+
+    tbody.innerHTML = "<tr><td colspan='3'>جاري التحقق...</td></tr>";
+    table.style.display = "table";
+    empty.style.display = "none";
+
+    try {
+        const response = await fetch(api);
+        const data = await response.json();
+        const match = data.filter(item => item.id === input);
+
+        tbody.innerHTML = "";
+        if(match.length > 0) {
+            match.forEach(item => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td class="price">${item.price || '0'} د.ع</td>
+                        <td><span class="status">${item.status}</span></td>
+                    </tr>`;
+            });
+        } else {
+            table.style.display = "none";
+            empty.style.display = "block";
         }
-    </script>
+    } catch(err) {
+        alert("اكو مشكلة بالإنترنت أو بالرابط");
+    }
+}
+</script>
+
 </body>
 </html>
